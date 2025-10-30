@@ -1,0 +1,44 @@
+{% extends 'base.html'%}
+{% block content %}
+
+<div class="container"> <!-- mejora el espaciado de la pagina-->
+    <form action=""> <!-- especifica que al hacer clic en enviar, enviamos el formulario a la misma pagina-->
+        <div class="mb-3"> <!-- agrega espacio inferior de 3 unidades-->
+            <label for="searchMovie" class="form-label"> <!-- asocia un texto descriptivo con un campo de entrada en un formulario-->
+                Search for Movie:
+            </label>
+            <input type="text" class="form-control" name="searchMovie"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <p>Searching for: {{searchTerm}}</p>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4"> <!-- define una fila en una cuadrícula con una columna en pantallas extra pequeñas y tres columnas en pantallas medianas o más grandes, con un espacio (gap) de 4 -->
+        {% for movie in movies %}
+        <div class="col">
+            <div class="card">
+                <img src="{{ movie.image.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">{{ movie.title }}</h5>
+                    <p class="card-text">{{ movie.description }}</p>
+                    <p class="card-text">{{ movie.genre }} </p>
+                    <p class="card-txt">{{ movie.year }} </p>
+                    {% if movie.url %}
+                        <a href="{{ movie.url }}" class="btn btn-primary">Movie Link</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <h2>Join our mailing list:</h2>
+        <form action="{% url 'signup' %}">
+            <div class="mb-3">
+                <label for="email" class="form-label"> Enter your email: </label>
+                <input type="email" class="form-control" name="email" />
+            </div>
+            <button type="submit" class="btn btn-primary"> Sign up</button>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
