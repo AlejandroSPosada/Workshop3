@@ -1,0 +1,4 @@
+*.pyc
+openAI.env
+*.env
+.env

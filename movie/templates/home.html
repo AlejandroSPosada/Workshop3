@@ -1,0 +1,61 @@
+{% extends 'base.html'%}
+{% block content %}
+{% load static %}
+    <div class="container"> <!-- mejora el espaciado de la pagina-->
+        <form action="">
+        <div class="mb-3">
+            <label for="searchMovie" class="form-label">Search for Movie:</label>
+            <input type="text" class="form-control" name="searchMovie"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    {% if searchTerm %}
+        <p>Searching for: {{ searchTerm }}</p>
+    {% endif %}
+
+    {% if recommended_movie %}
+        <h2>🎬 Recommended Movie:</h2>
+        <div class="card" style="width: 18rem;">
+            <img src="{{ recommended_movie.image.url }}" class="card-img-top" alt="{{ recommended_movie.title }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ recommended_movie.title }}</h5>
+                <p class="card-text">{{ recommended_movie.description }}</p>
+            </div>
+        </div>
+    {% endif %}
+
+
+    <div class="row row-cols-1 row-cols-md-3 g-4"> <!-- define una fila en una cuadrícula con una columna en pantallas extra pequeñas y tres columnas en pantallas medianas o más grandes, con un espacio (gap) de 4 -->
+        {% for movie in movies %}
+        <div class="col">
+            <div class="card">
+                {% if movie.image %}
+                    <img src="{{ movie.image.url }}" class="card-img-top" alt="{{ movie.title }}">
+                {% else %}
+                    <img src="media/movie/images/default.jpg" class="card-img-top" alt="{{ movie.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">{{ movie.title }}</h5>
+                    <p class="card-text">{{ movie.description }}</p>
+                    <p class="card-text">{{ movie.genre }} </p>
+                    <p class="card-txt">{{ movie.year }} </p>
+                    {% if movie.url %}
+                        <a href="{{ movie.url }}" class="btn btn-primary">Movie Link</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <h2>Join our mailing list:</h2>
+        <form action="{% url 'signup' %}">
+            <div class="mb-3">
+                <label for="email" class="form-label"> Enter your email: </label>
+                <input type="email" class="form-control" name="email" />
+            </div>
+            <button type="submit" class="btn btn-primary"> Sign up</button>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
